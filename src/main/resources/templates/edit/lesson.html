@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/page :: head(title=${title})">
+</head>
+<body>
+<header th:replace="fragments/page :: header"></header>
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/page :: sidebar(section='Lessons')"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div th:replace="fragments/page :: title(name=${title})"></div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb float-end">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/lessons(page=${page}, size=${size})}">Lessons</a></li>
+                            <li class="breadcrumb-item active" th:text="${title}"></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <form th:with="url=${lesson.id == null} ? '/lessons/create' : '/lessons/update'"
+                  th:action="@{${url}(page=${page}, size=${size})}" th:object="${lesson}"
+                  class="needs-validation" autocomplete="off" novalidate="" method="post">
+                <input th:field="*{id}" type="hidden">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="groupList">Group</label>
+                        <select class="form-control" id="groupList"
+                                th:classappend="${#fields.hasErrors('group') ? 'is-invalid' : ''}"
+                                th:field="*{group}" >
+                            <option value="">Select group</option>
+                            <option th:each="current : ${groups}" th:value="${current.id}" th:text="${current.name}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{group}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="subjectList">Subject</label>
+                        <select class="form-control" id="subjectList"
+                                th:classappend="${#fields.hasErrors('subject') ? 'is-invalid' : ''}"
+                                th:field="*{subject}">
+                            <option value="">Select subject</option>
+                            <option th:each="current : ${subjects}" th:value="${current.id}" th:text="${current.name}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{subject}"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="teacherList">Teacher</label>
+                        <select class="form-control" id="teacherList"
+                                th:classappend="${#fields.hasErrors('teacher') ? 'is-invalid' : ''}"
+                                th:field="*{teacher}">
+                            <option value="">Select teacher</option>
+                            <option th:each="current : ${teachers}" th:value="${current.id}" th:text="${current.firstName} + ' ' + ${current.lastName}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{teacher}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="roomList">Room</label>
+                        <select  class="form-control" id="roomList"
+                                 th:classappend="${#fields.hasErrors('room') ? 'is-invalid' : ''}"
+                                 th:field="*{room}">
+                            <option value="">Select room</option>
+                            <option th:each="current : ${rooms}" th:value="${current.id}" th:text="${current?.building?.name} + ' - ' + ${current.name}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{room}"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="date">Date</label>
+                        <input type="text" class="form-control" id="date" placeholder="Enter date" required=""
+                               th:classappend="${#fields.hasErrors('date') ? 'is-invalid' : ''}"
+                               th:field="*{date}">
+                        <div class="invalid-feedback" th:errors="*{date}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="number">Number</label>
+                        <input type="text" class="form-control" id="number" placeholder="Enter number" required=""
+                               th:classappend="${#fields.hasErrors('number') ? 'is-invalid' : ''}"
+                               th:field="*{number}">
+                        <div class="invalid-feedback" th:errors="*{number}"></div>
+                    </div>
+                </div>
+                <div class="float-end">
+                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+<th:block th:insert="fragments/page :: script"></th:block>
+</html>

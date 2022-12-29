@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/page :: head(title=${title})">
+</head>
+<body>
+<header th:replace="fragments/page :: header"></header>
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/page :: sidebar(section='Administrators')"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div th:replace="fragments/page :: title(name=${title})"></div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb float-end">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/administrators(page=${page}, size=${size})}">Administrators</a>
+                            </li>
+                            <li class="breadcrumb-item active" th:text="${title}"></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <form th:with="url=${administrator.id == null} ? '/administrators/create' : '/administrators/update'"
+                  th:action="@{${url}(page=${page}, size=${size})}" th:object="${administrator}"
+                  class="needs-validation" autocomplete="off" novalidate="" method="post">
+                <input th:field="*{id}" type="hidden">
+                <input th:field="*{user.id}" type="hidden">
+                <input th:field="*{user.roles}" type="hidden">
+                <div class="row" type="hidden">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required
+                               th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' : ''}"
+                               th:field="*{firstName}">
+                        <div class="invalid-feedback" th:errors="*{firstName}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required=""
+                               th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' : ''}"
+                               th:field="*{lastName}">
+                        <div class="invalid-feedback" th:errors="*{lastName}"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="username">Email</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="username" placeholder="Enter email address"
+                                   autocomplete="off" required=""
+                                   th:classappend="${#fields.hasErrors('user.email') ? 'is-invalid' : ''}"
+                                   th:field="*{user.email}">
+                            <div class="invalid-feedback" th:errors="*{user.email}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="password"
+                                   placeholder="Enter password" autocomplete="off" required=""
+                                   th:classappend="${#fields.hasErrors('user.password') ? 'is-invalid' : ''}"
+                                   th:field="*{user.password}">
+                            <div class="invalid-feedback" th:errors="*{user.password}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comment" rows="3" placeholder="Enter comment"
+                                  th:field="*{user.comment}"></textarea>
+                    </div>
+                </div>
+                <div class="float-end">
+                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+<th:block th:insert="fragments/page :: script"></th:block>
+</html>

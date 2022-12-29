@@ -16,8 +16,24 @@
 <!-- ABOUT THE PROJECT -->
 ### About The Project
 ***
-This is my project example [Task 3.1 Planning: Decompose university](https://lms.foxminded.com.ua/mod/assign/view.php?id=1439)
-The main feature of the application is Class Timetable for students and teachers. 
+This is my pet project :)
+The following framework and libraries are used:
+- Spring boot
+- Spring MVC
+- Spring data
+- Spring security
+- Thymeleaf
+- Webjars
+- Flyway
+- Lombok
+
+App by default use PostgreSQL and can be deployed in docker.
+
+<!-- Summary -->
+### Summary
+***
+
+The main feature of the application is Class Lesson for students and teachers. 
 Students or teachers can get their timetable for a day or for a month.
 The following persons work with the system:
 - Administrator
@@ -27,40 +43,26 @@ The following persons work with the system:
 <!-- ADMINISTRATOR USAGE -->
 ### Administrator usage
 ***
-The administrator can create, change, or delete teacher credentials.
 
-Given user is logged on as Administrator
-- User can see and navigate to `Teachers` menu
-- The user should see a list of all teachers
-- User can create, change, or delete teacher from list;
-  The administrator can create, change, or delete Teachers credentials.
+The administrator can create, change, or delete any row on any table.  
 
-The administrator can create, change, or delete student credentials.
-
-Given user is logged on as Administrator
-- User can see and navigate to `Students` menu
-- The user should see a list of all Students
-- User can create, change, or delete Students from list;
-
+**Default credential**  
+username: administrator@university.local  
+password: root
 
 <!-- TEACHER USAGE -->
 ### Teacher usage
 ***
-Teacher can view own schedule flow:
-Given user is logged on as Teacher
-- User can see and navigate to `My Schedule` menu
-- User should see own Teacher schedule according to selected date/range filter
+Teacher can view only own lessons.
 
 <!-- STUDENT USAGE -->
 ### Student usage
 ***
-Student can view own schedule flow:
-Given user is logged on as Student
-- User can see and navigate to `My Schedule` menu
-- User should see own Student schedule according to selected date/range filter
+Student can can view only own lessons.
+
 
 <!-- UML DIAGRAM -->
-### Project UML class diagram
+### UML class diagram
 ***
 <div align="center">
   <img src="diagram.png" alt="Diagram">

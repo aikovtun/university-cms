@@ -1,0 +1,42 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Login to CME</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.2/css/bootstrap.min.css}"/>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/logo.png}"/>
+    <link rel="stylesheet" th:href="@{/css/signin.css}"/>
+<body class="text-center">
+
+<main class="form-signin w-100 m-auto">
+    <form method="post" th:action="@{/login}">
+        <img class="mb-4" src="/img/logo.png" alt="" width="64" height="64">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="username" name="username" placeholder="name@example.com">
+            <label for="username">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" name="password" placeholder="password">
+            <label for="password">Password</label>
+        </div>
+        <div th:if="${param.error}" class="text-danger d-flex align-items-center justify-content-center">
+            Invalid username and password.
+        </div>
+        <h1></h1>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+        <p class="mt-5 mb-3 text-muted">© 2022</p>
+    </form>
+</main>
+</body>
+</html>

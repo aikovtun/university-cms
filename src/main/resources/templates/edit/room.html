@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/page :: head(title=${title})">
+</head>
+<body>
+<header th:replace="fragments/page :: header"></header>
+<div class="container-fluid">
+    <div class="row">
+        <nav th:replace="fragments/page :: sidebar(section='Rooms')"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div th:replace="fragments/page :: title(name=${title})"></div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb float-end">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/rooms(page=${page}, size=${size})}">Rooms</a></li>
+                            <li class="breadcrumb-item active" th:text="${title}"></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <form th:with="url=${room.id == null} ? '/rooms/create' : '/rooms/update'"
+                  th:action="@{${url}(page=${page}, size=${size})}" th:object="${room}"
+                  class="needs-validation" autocomplete="off" novalidate="" method="post">
+                <input th:field="*{id}" type="hidden">
+                <div class="row" type="hidden">
+                    <div class="col-md-12 mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" required=""
+                               th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+                               th:field="*{name}">
+                        <div class="invalid-feedback" th:errors="*{name}"></div>
+                    </div>
+                </div>
+                <div class="row" type="hidden">
+                    <div class="col-md-6 mb-3">
+                        <label for="typeList">Building</label>
+                        <select class="form-control" id="typeList"
+                                th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
+                                th:field="*{type}">
+                            <option value="">Select type</option>
+                            <option th:each="current : ${types}" th:value="${current.name}" th:text="${current.presentation}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{type}"></div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="buildingList">Building</label>
+                        <select class="form-control" id="buildingList"
+                                th:field="*{building}"
+                                th:classappend="${#fields.hasErrors('building') ? 'is-invalid' : ''}">
+                            <option value="">Select building</option>
+                            <option th:each="current : ${buildings}" th:value="${current.id}" th:text="${current.name}"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{building}"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="3" placeholder="Enter description"
+                                  th:field="*{description}"></textarea>
+                    </div>
+                </div>
+                <div class="float-end">
+                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+<th:block th:insert="fragments/page :: script"></th:block>
+</html>
