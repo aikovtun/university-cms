@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="pagination(number, total, size)">
+<nav aria-label="Pagination" th:if="${total > 0}">
+<ul class="pagination pagination-sm">
+    <li class="page-item" th:classappend="${number == 0} ? 'disabled'">
+        <a th:replace="fragments/paging :: paging(1, '<<', ${size}, 'First Page')"></a>
+    </li>
+    <li class="page-item font-weight-bold" th:classappend="${number == 0} ? 'disabled'">
+        <a th:replace="fragments/paging :: paging(${number}, 'Prev', ${size}, 'Previous Page')"></a>
+    </li>
+    <li class="page-item disabled" th:if="${number - 2 > 1}">
+        <a class="page-link" href="#">...</a>
+    </li>
+    <li class="page-item" th:classappend="${current - 1 == number} ? 'active'"
+        th:each="current : ${#numbers.sequence((number > 2 ? number - 2 : 1), (number + 4 < total ? number + 4 : total))}">
+        <a th:replace="fragments/paging :: paging(${current}, ${current}, ${size}, 'Page ' + ${current})"></a>
+    </li>
+    <li class="page-item disabled" th:if="${number + 2 < total}">
+        <a class="page-link" href="#">...</a>
+    </li>
+    <li class="page-item font-weight-bold" th:classappend="${number + 1 == total} ? 'disabled'">
+        <a th:replace="fragments/paging :: paging(${number + 2},'Next', ${size}, 'Next Page')"></a>
+    </li>
+    <li class="page-item" th:classappend="${number + 1 == total} ? 'disabled'">
+        <a th:replace="fragments/paging :: paging(${total}, '>>', ${size}, 'Last Page')"></a>
+    </li>
+</ul>
+</nav>
+</div>
+<a th:fragment="paging(number, label, size, tooltip)" class="page-link"
+   th:href="@{${#request.requestURI} + '?' + 'page=' + ${number} + '&size=' + ${size}}"
+   th:title="${tooltip}" rel="tooltip">
+    [[${label}]]
+</a>
+</html>
