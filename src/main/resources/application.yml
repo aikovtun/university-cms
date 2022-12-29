@@ -1,0 +1,37 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    default: dev
+  flyway:
+    baseline-on-migrate: true
+    locations: classpath:migration
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 50
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/${DB_DATABASE}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5432/${DB_DATABASE}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
